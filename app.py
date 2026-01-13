@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 # ═══════════════════════════════════════════════════════════════════════════════
 # CARGA DE DATOS
 # ═══════════════════════════════════════════════════════════════════════════════
-df = pd.read_csv("panel_2025_paises_sin_nan_R_clean.csv")
+df = pd.read_csv("panel_2020_paises_sin_nan_R_clean.csv")
 df['fecha'] = pd.to_datetime(df['fecha'])
 
 numeric_cols = ['confirmados', 'muertes', 'IA_100k', 'tasa_mortalidad_por_millon', 
@@ -80,11 +80,12 @@ body { background: linear-gradient(135deg, #0c0c1e 0%, #1a1a3e 50%, #0d0d2b 100%
 .dashboard-kpi:nth-child(4) { animation-delay: 0.4s; }
 .dashboard-kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899); }
 .dashboard-kpi:hover { transform: translateY(-5px); border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2); }
-.dashboard-kpi-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
-.dashboard-kpi-icon.casos { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1)); }
-.dashboard-kpi-icon.muertes { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1)); }
-.dashboard-kpi-icon.paises { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1)); }
-.dashboard-kpi-icon.letalidad { background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1)); }
+.dashboard-kpi-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+.dashboard-kpi-icon svg { width: 26px; height: 26px; }
+.dashboard-kpi-icon.casos { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1)); color: #818cf8; }
+.dashboard-kpi-icon.muertes { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1)); color: #f87171; }
+.dashboard-kpi-icon.paises { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1)); color: #34d399; }
+.dashboard-kpi-icon.letalidad { background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1)); color: #fbbf24; }
 .dashboard-kpi-value { font-size: 2.2rem; font-weight: 700; margin-bottom: 5px; animation: countUp 0.8s ease-out forwards; }
 .dashboard-kpi-value.casos { color: #818cf8; }
 .dashboard-kpi-value.muertes { color: #f87171; }
@@ -275,7 +276,7 @@ app_ui = ui.page_fluid(
         # Filtros
         ui.div(
             ui.div(
-                ui.div("🎛️ Filtros de Visualización", class_="filter-title"),
+                ui.HTML('<div class="filter-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;vertical-align:middle;margin-right:8px"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>Filtros de Visualización</div>'),
                 class_="filter-header"
             ),
             ui.row(
@@ -459,28 +460,28 @@ def server(input, output, session):
         return ui.HTML(f'''
         <div class="dashboard-kpis">
             <div class="dashboard-kpi">
-                <div class="dashboard-kpi-icon casos">🦠</div>
+                <div class="dashboard-kpi-icon casos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/><path d="m4.93 4.93 2.83 2.83m8.48 8.48 2.83 2.83m0-14.14-2.83 2.83m-8.48 8.48-2.83 2.83"/></svg></div>
                 <div class="dashboard-kpi-value casos">{fmt(total_casos)}</div>
                 <div class="dashboard-kpi-label">Casos Confirmados</div>
-                <div class="dashboard-kpi-change">📊 Total acumulado global</div>
+                <div class="dashboard-kpi-change"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:middle;margin-right:4px"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Total acumulado global</div>
             </div>
             <div class="dashboard-kpi">
-                <div class="dashboard-kpi-icon muertes">💔</div>
+                <div class="dashboard-kpi-icon muertes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
                 <div class="dashboard-kpi-value muertes">{fmt(total_muertes)}</div>
                 <div class="dashboard-kpi-label">Muertes Totales</div>
-                <div class="dashboard-kpi-change">📉 Impacto global</div>
+                <div class="dashboard-kpi-change"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:middle;margin-right:4px"><path d="M3 3v18h18"/><path d="m19 15-5-5-4 4-3-3"/></svg>Impacto global</div>
             </div>
             <div class="dashboard-kpi">
-                <div class="dashboard-kpi-icon paises">🌍</div>
+                <div class="dashboard-kpi-icon paises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
                 <div class="dashboard-kpi-value paises">{n_paises}</div>
                 <div class="dashboard-kpi-label">Países Analizados</div>
-                <div class="dashboard-kpi-change">🗺️ Cobertura mundial</div>
+                <div class="dashboard-kpi-change"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:middle;margin-right:4px"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>Cobertura mundial</div>
             </div>
             <div class="dashboard-kpi">
-                <div class="dashboard-kpi-icon letalidad">⚠️</div>
+                <div class="dashboard-kpi-icon letalidad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
                 <div class="dashboard-kpi-value letalidad">{avg_letalidad:.2f}%</div>
                 <div class="dashboard-kpi-label">Tasa de Letalidad</div>
-                <div class="dashboard-kpi-change">📈 Promedio CFR</div>
+                <div class="dashboard-kpi-change"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:middle;margin-right:4px"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Promedio CFR</div>
             </div>
         </div>
         ''')
@@ -582,11 +583,11 @@ def server(input, output, session):
         for _, row in data.iterrows():
             hover_texts.append(
                 f"<b>{row['pais']}</b><br><br>"
-                f"🦠 Casos: {row['confirmados']:,.0f}<br>"
-                f"💀 Muertes: {row['muertes']:,.0f}<br>"
-                f"📊 Incidencia: {row['IA_100k']:,.1f}/100k<br>"
-                f"⚠️ Letalidad: {row['letalidad_CFR_pct']:.2f}%<br>"
-                f"👥 Población: {row['poblacion']:,.0f}"
+                f"● Casos: {row['confirmados']:,.0f}<br>"
+                f"● Muertes: {row['muertes']:,.0f}<br>"
+                f"● Incidencia: {row['IA_100k']:,.1f}/100k<br>"
+                f"● Letalidad: {row['letalidad_CFR_pct']:.2f}%<br>"
+                f"● Población: {row['poblacion']:,.0f}"
             )
         
         fig = go.Figure(go.Bar(
