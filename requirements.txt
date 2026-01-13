@@ -1,0 +1,13 @@
+# Dashboard COVID-19 - Dependencias principales
+shiny==1.5.1
+shinywidgets==0.7.0
+plotly==6.5.1
+pandas==2.3.3
+numpy==2.4.1
+
+# Servidor web
+uvicorn==0.40.0
+starlette==0.51.0
+
+# Utilidades
+python-dateutil==2.9.0.post0
