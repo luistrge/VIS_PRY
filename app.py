@@ -1,6 +1,7 @@
 from shiny import App, ui, render, reactive
 from shinywidgets import output_widget, render_widget
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -14,7 +15,7 @@ numeric_cols = [
     "confirmados",
     "muertes",
     "IA_100k",
-    "tasa_mortalidad_por_millon",
+    "tasa_mortalidad_100k",
     "letalidad_CFR_pct",
     "confirmados_dia",
     "muertes_dia",
@@ -61,17 +62,17 @@ body { background: linear-gradient(135deg, #0c0c1e 0%, #1a1a3e 50%, #0d0d2b 100%
 
 /* HERO LANDING */
 .hero-landing { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; position: relative; }
-.hero-section { background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(25, 25, 55, 0.9)); padding: 60px; border-radius: 30px; border: 1px solid rgba(99, 102, 241, 0.2); backdrop-filter: blur(20px); max-width: 1200px; width: 100%; position: relative; overflow: hidden; }
+.hero-section { background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(25, 25, 55, 0.9)); padding: 100px; border-radius: 30px; border: 1px solid rgba(99, 102, 241, 0.2); backdrop-filter: blur(20px); max-width: 1600px; width: 100%; position: relative; overflow: hidden; }
 .hero-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 50%); pointer-events: none; }
-.hero-content { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 50px; }
+.hero-content { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 60px; flex-direction: row-reverse; }
 .hero-text { flex: 1; }
 .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 6px 14px; border-radius: 50px; margin-bottom: 20px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.8); letter-spacing: 1px; text-transform: uppercase; }
 .hero-badge-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
-.hero-title { font-size: 3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.2; }
+.hero-title { font-size: 3.5rem; font-weight: 700; color: #fff; margin-bottom: 20px; line-height: 1.2; }
 .hero-title-accent { background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.hero-description { font-size: 1.1rem; color: rgba(255, 255, 255, 0.6); line-height: 1.7; margin-bottom: 30px; max-width: 500px; }
-.hero-visual { flex: 0 0 280px; }
-.hero-globe { width: 250px; height: 250px; }
+.hero-description { font-size: 1.2rem; color: rgba(255, 255, 255, 0.6); line-height: 1.7; margin-bottom: 35px; max-width: 600px; }
+.hero-visual { flex: 0 0 400px; }
+.hero-globe { width: 380px; height: 380px; }
 .hero-globe svg { width: 100%; height: 100%; filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.4)); }
 
 /* BOTONES DE NAVEGACIÓN HERO */
@@ -150,6 +151,9 @@ body { background: linear-gradient(135deg, #0c0c1e 0%, #1a1a3e 50%, #0d0d2b 100%
 .chart-section { background: linear-gradient(145deg, rgba(25, 25, 55, 0.7), rgba(15, 15, 45, 0.8)); border-radius: 20px; padding: 25px 15px; margin-bottom: 25px; border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); animation: glowPulse 4s ease-in-out infinite; scroll-margin-top: 80px; transition: all 0.3s ease; }
 .chart-section:hover { border-color: rgba(99, 102, 241, 0.3); }
 .chart-section .js-plotly-plot { width: 100% !important; }
+.chart-section .plotly-graph-div { width: 100% !important; }
+.chart-section .svg-container { width: 100% !important; }
+.chart-section .main-svg { width: 100% !important; }
 .chart-section.map-section { padding: 15px 0 10px 0; overflow: hidden; margin-left: auto; margin-right: auto; width: 100%; border-radius: 20px; }
 .chart-section.map-section .section-header { padding-left: 25px; padding-right: 25px; }
 .chart-section.map-section .js-plotly-plot, .chart-section.map-section .plotly-graph-div { width: 100% !important; display: flex; justify-content: center; }
@@ -192,9 +196,9 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 .dashboard-section { padding: 40px 20px; min-height: 100vh; }
 
 /* GRID DE GRÁFICOS 2x2 */
-.charts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 25px; }
-.charts-grid .chart-section { margin-bottom: 0; display: flex; flex-direction: column; min-height: 450px; }
-.charts-grid .chart-section .js-plotly-plot, .charts-grid .chart-section .plotly-graph-div { display: flex; justify-content: center; }
+.charts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-top: 25px; }
+.charts-grid .chart-section { margin-bottom: 0; display: flex; flex-direction: column; min-height: 550px; }
+.charts-grid .chart-section .js-plotly-plot, .charts-grid .chart-section .plotly-graph-div { width: 100% !important; }
 .charts-grid .chart-section .section-header { padding-bottom: 10px; margin-bottom: 15px; flex-shrink: 0; }
 .charts-grid .chart-section .section-number { font-size: 1.8rem; }
 .charts-grid .chart-section .section-title { font-size: 1.1rem; }
@@ -315,20 +319,64 @@ def server(input, output, session):
                         <div class="hero-globe">
                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
-                                    <linearGradient id="globeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.8" />
-                                        <stop offset="50%" style="stop-color:#a855f7;stop-opacity:0.6" />
-                                        <stop offset="100%" style="stop-color:#ec4899;stop-opacity:0.4" />
+                                    <linearGradient id="lungGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ef4444;stop-opacity:0.8" />
+                                        <stop offset="100%" style="stop-color:#f97316;stop-opacity:0.5" />
                                     </linearGradient>
+                                    <linearGradient id="virusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.9" />
+                                        <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.7" />
+                                    </linearGradient>
+                                    <filter id="glow">
+                                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                    </filter>
                                 </defs>
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="url(#globeGrad)" stroke-width="2"/>
-                                <ellipse cx="100" cy="100" rx="80" ry="30" fill="none" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
-                                <ellipse cx="100" cy="100" rx="30" ry="80" fill="none" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
-                                <ellipse cx="100" cy="100" rx="55" ry="80" fill="none" stroke="rgba(99,102,241,0.2)" stroke-width="1"/>
-                                <circle cx="60" cy="70" r="4" fill="#6366f1"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle>
-                                <circle cx="130" cy="85" r="5" fill="#a855f7"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite"/></circle>
-                                <circle cx="85" cy="120" r="3" fill="#ec4899"><animate attributeName="opacity" values="1;0.5;1" dur="1.8s" repeatCount="indefinite"/></circle>
-                                <circle cx="145" cy="110" r="4" fill="#06b6d4"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite"/></circle>
+                                <!-- Pulmón izquierdo -->
+                                <path d="M75,70 Q55,75 50,95 Q45,125 55,150 Q65,170 80,165 Q90,160 90,130 Q90,100 85,85 Q82,75 75,70" fill="url(#lungGrad)" opacity="0.7" filter="url(#glow)">
+                                    <animate attributeName="opacity" values="0.6;0.8;0.6" dur="3s" repeatCount="indefinite"/>
+                                </path>
+                                <!-- Pulmón derecho -->
+                                <path d="M125,70 Q145,75 150,95 Q155,125 145,150 Q135,170 120,165 Q110,160 110,130 Q110,100 115,85 Q118,75 125,70" fill="url(#lungGrad)" opacity="0.7" filter="url(#glow)">
+                                    <animate attributeName="opacity" values="0.7;0.9;0.7" dur="2.8s" repeatCount="indefinite"/>
+                                </path>
+                                <!-- Tráquea -->
+                                <path d="M100,40 L100,85 M90,85 L100,70 L110,85" stroke="#f97316" stroke-width="4" fill="none" stroke-linecap="round"/>
+                                <!-- Virus principal -->
+                                <circle cx="140" cy="55" r="20" fill="url(#virusGrad)" filter="url(#glow)">
+                                    <animate attributeName="r" values="20;22;20" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                <!-- Spikes del virus -->
+                                <g stroke="#a855f7" stroke-width="2" fill="none">
+                                    <line x1="140" y1="35" x2="140" y2="25"/><circle cx="140" cy="22" r="4" fill="#a855f7"/>
+                                    <line x1="140" y1="75" x2="140" y2="85"/><circle cx="140" cy="88" r="4" fill="#c084fc"/>
+                                    <line x1="120" y1="55" x2="110" y2="55"/><circle cx="107" cy="55" r="4" fill="#818cf8"/>
+                                    <line x1="160" y1="55" x2="170" y2="55"/><circle cx="173" cy="55" r="4" fill="#a855f7"/>
+                                    <line x1="126" y1="41" x2="118" y2="33"/><circle cx="115" cy="30" r="3" fill="#c084fc"/>
+                                    <line x1="154" y1="41" x2="162" y2="33"/><circle cx="165" cy="30" r="3" fill="#818cf8"/>
+                                    <line x1="126" y1="69" x2="118" y2="77"/><circle cx="115" cy="80" r="3" fill="#a855f7"/>
+                                    <line x1="154" y1="69" x2="162" y2="77"/><circle cx="165" cy="80" r="3" fill="#c084fc"/>
+                                </g>
+                                <!-- Virus secundario pequeño -->
+                                <circle cx="55" cy="50" r="12" fill="url(#virusGrad)" opacity="0.6">
+                                    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2.5s" repeatCount="indefinite"/>
+                                </circle>
+                                <g stroke="#a855f7" stroke-width="1.5" fill="none" opacity="0.6">
+                                    <line x1="55" y1="38" x2="55" y2="32"/><circle cx="55" cy="30" r="2.5" fill="#a855f7"/>
+                                    <line x1="55" y1="62" x2="55" y2="68"/><circle cx="55" cy="70" r="2.5" fill="#c084fc"/>
+                                    <line x1="43" y1="50" x2="37" y2="50"/><circle cx="35" cy="50" r="2.5" fill="#818cf8"/>
+                                    <line x1="67" y1="50" x2="73" y2="50"/><circle cx="75" cy="50" r="2.5" fill="#a855f7"/>
+                                </g>
+                                <!-- Partículas flotantes -->
+                                <circle cx="170" cy="140" r="6" fill="#ef4444" opacity="0.4">
+                                    <animate attributeName="cy" values="140;130;140" dur="4s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="35" cy="130" r="4" fill="#f97316" opacity="0.3">
+                                    <animate attributeName="cy" values="130;140;130" dur="3.5s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="160" cy="170" r="5" fill="#a855f7" opacity="0.3">
+                                    <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite"/>
+                                </circle>
                             </svg>
                         </div>
                     </div>
@@ -346,7 +394,7 @@ def server(input, output, session):
                     ui.input_action_button(
                         "btn_pais",
                         ui.HTML(
-                            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Análisis por País'
+                            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg> Análisis por País'
                         ),
                         class_="hero-btn hero-btn-secondary",
                     ),
@@ -610,7 +658,7 @@ def server(input, output, session):
             ui.HTML("""
             <div class="section-page-header">
                 <div class="section-page-icon pais">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                 </div>
                 <div>
                     <h1 class="section-page-title">Análisis por País</h1>
@@ -695,38 +743,44 @@ def server(input, output, session):
                 ),
                 class_="charts-row",
             ),
-            # Segunda fila 2x2: Casos Diarios y Muertes Diarias
+            # Fila: Casos y Muertes lado a lado
             ui.div(
                 ui.div(
                     ui.div(
                         ui.span("03", class_="section-number"),
                         ui.div(
-                            ui.div("Casos Diarios", class_="section-title"),
+                            ui.div("Casos por Mes", class_="section-title"),
                             ui.div(
-                                "Evolución de nuevos casos por día",
+                                "Nuevos contagios mensuales",
                                 class_="section-subtitle",
                             ),
                         ),
                         class_="section-header",
                     ),
-                    output_widget("chart_diarios_pais"),
+                    output_widget("chart_casos_mes"),
                     class_="chart-section",
                 ),
                 ui.div(
                     ui.div(
                         ui.span("04", class_="section-number"),
                         ui.div(
-                            ui.div("Muertes Diarias", class_="section-title"),
+                            ui.div("Muertes por Mes", class_="section-title"),
                             ui.div(
-                                "Evolución de muertes por día", class_="section-subtitle"
+                                "Fallecimientos mensuales",
+                                class_="section-subtitle",
                             ),
                         ),
                         class_="section-header",
                     ),
-                    output_widget("chart_muertes_pais"),
+                    output_widget("chart_muertes_mes"),
                     class_="chart-section",
                 ),
                 class_="charts-row",
+            ),
+            # Mensaje de relación entre casos y muertes
+            ui.div(
+                ui.output_ui("mensaje_relacion_picos"),
+                style="text-align: center; margin-top: -10px; margin-bottom: 20px;",
             ),
             ui.HTML(
                 '<div class="footer">Dashboard COVID-19 2020 | Datos: WHO & World Bank | Shiny for Python + Plotly</div>'
@@ -984,7 +1038,7 @@ def server(input, output, session):
         )
 
         fig.update_layout(
-            height=500,
+            height=600,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(color="rgba(255,255,255,0.8)"),
@@ -1059,7 +1113,7 @@ def server(input, output, session):
                 font=dict(size=16, color="rgba(255,255,255,0.6)"),
             )
             fig.update_layout(
-                height=400, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
+                height=500, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
             )
             return fig
 
@@ -1129,13 +1183,14 @@ def server(input, output, session):
                 borderwidth=1,
             ),
             xaxis=dict(
-                title="Tiempo",
+                title=dict(text="Tiempo", font=dict(size=13, color="rgba(255,255,255,0.9)")),
                 gridcolor="rgba(255,255,255,0.1)",
                 showline=True,
                 linecolor="rgba(99,102,241,0.3)",
+                tickfont=dict(size=12, color="rgba(255,255,255,0.9)"),
             ),
             yaxis=dict(
-                title="Intensidad (normalizado)",
+                title=dict(text="Intensidad (normalizado)", font=dict(size=13, color="rgba(255,255,255,0.9)")),
                 gridcolor="rgba(255,255,255,0.05)",
                 showticklabels=False,
             ),
@@ -1173,7 +1228,7 @@ def server(input, output, session):
                 font=dict(size=16, color="rgba(255,255,255,0.6)"),
             )
             fig.update_layout(
-                height=400, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
+                height=500, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
             )
             return fig
 
@@ -1278,9 +1333,9 @@ def server(input, output, session):
             height=None,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="rgba(255,255,255,0.8)", size=10),
-            xaxis=dict(gridcolor="rgba(255,255,255,0.1)"),
-            yaxis=dict(gridcolor="rgba(255,255,255,0.1)"),
+            font=dict(color="rgba(255,255,255,0.9)", size=12),
+            xaxis=dict(gridcolor="rgba(255,255,255,0.1)", tickfont=dict(size=12, color="rgba(255,255,255,0.9)")),
+            yaxis=dict(gridcolor="rgba(255,255,255,0.1)", tickfont=dict(size=12, color="rgba(255,255,255,0.9)")),
             margin=dict(l=50, r=15, t=10, b=40),
         )
         return fig
@@ -1406,7 +1461,7 @@ def server(input, output, session):
         if len(data) == 0:
             fig = go.Figure()
             fig.update_layout(
-                height=400, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
+                height=500, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
             )
             return fig
 
@@ -1426,9 +1481,9 @@ def server(input, output, session):
             height=400,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="rgba(255,255,255,0.8)"),
-            xaxis=dict(gridcolor="rgba(255,255,255,0.1)", tickangle=-45),
-            yaxis=dict(gridcolor="rgba(255,255,255,0.1)"),
+            font=dict(color="rgba(255,255,255,0.9)", size=12),
+            xaxis=dict(gridcolor="rgba(255,255,255,0.1)", tickangle=-45, tickfont=dict(size=12, color="rgba(255,255,255,0.9)")),
+            yaxis=dict(gridcolor="rgba(255,255,255,0.1)", tickfont=dict(size=12, color="rgba(255,255,255,0.9)")),
             margin=dict(l=50, r=20, t=30, b=80),
         )
         return fig
@@ -1439,7 +1494,7 @@ def server(input, output, session):
         if len(data) == 0:
             fig = go.Figure()
             fig.update_layout(
-                height=400, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
+                height=500, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
             )
             return fig
 
@@ -1447,18 +1502,18 @@ def server(input, output, session):
         ultimo = data.loc[data["fecha"].idxmax()]
         pais_letalidad = ultimo["letalidad_CFR_pct"]
         pais_incidencia = ultimo["IA_100k"]
-        pais_mortalidad = ultimo["tasa_mortalidad_por_millon"]
+        pais_mortalidad = ultimo["tasa_mortalidad_100k"]
         pais_gasto_salud = ultimo["gasto_salud_pib"] if "gasto_salud_pib" in ultimo else 0
         pais_nombre = input.pais_select()
 
         # Medias mundiales
         media_letalidad = df_ultimo["letalidad_CFR_pct"].mean()
         media_incidencia = df_ultimo["IA_100k"].mean()
-        media_mortalidad = df_ultimo["tasa_mortalidad_por_millon"].mean()
+        media_mortalidad = df_ultimo["tasa_mortalidad_100k"].mean()
         media_gasto_salud = df_ultimo["gasto_salud_pib"].mean()
 
         # Datos para el gráfico
-        categorias = ["Letalidad (%)", "Incidencia/100k", "Mort./Millón", "Gasto Salud (%)"]
+        categorias = ["Letalidad (%)", "Incidencia/100k", "Mort./100k", "Gasto Salud (%)"]
         valores_pais = [pais_letalidad, pais_incidencia / 100, pais_mortalidad / 10, pais_gasto_salud]
         valores_media = [media_letalidad, media_incidencia / 100, media_mortalidad / 10, media_gasto_salud]
 
@@ -1474,7 +1529,7 @@ def server(input, output, session):
             marker_line_width=2,
             text=[f"{pais_letalidad:.2f}%", f"{pais_incidencia:,.0f}", f"{pais_mortalidad:,.0f}", f"{pais_gasto_salud:.1f}%"],
             textposition="outside",
-            textfont=dict(color="#818cf8", size=11),
+            textfont=dict(color="#818cf8", size=13, weight="bold"),
         ))
 
         # Barras de la media mundial
@@ -1487,18 +1542,19 @@ def server(input, output, session):
             marker_line_width=2,
             text=[f"{media_letalidad:.2f}%", f"{media_incidencia:,.0f}", f"{media_mortalidad:,.0f}", f"{media_gasto_salud:.1f}%"],
             textposition="outside",
-            textfont=dict(color="#c084fc", size=11),
+            textfont=dict(color="#c084fc", size=13, weight="bold"),
         ))
 
         fig.update_layout(
             barmode="group",
-            height=400,
+            height=500,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(color="rgba(255,255,255,0.8)"),
             xaxis=dict(
                 gridcolor="rgba(255,255,255,0.1)",
-                tickfont=dict(size=10),
+                tickfont=dict(size=13, color="rgba(255,255,255,0.95)"),
+                tickangle=0,
             ),
             yaxis=dict(
                 gridcolor="rgba(255,255,255,0.1)",
@@ -1520,70 +1576,187 @@ def server(input, output, session):
         return fig
 
     @render_widget
-    def chart_diarios_pais():
+    def chart_casos_mes():
+        """Gráfico de barras: casos por mes"""
         data = datos_pais_filtrados()
         if len(data) == 0:
             fig = go.Figure()
             fig.update_layout(
-                height=400, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
+                height=500, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
             )
             return fig
 
-        data = data.copy()
-        data["mes"] = data["fecha"].dt.to_period("M").astype(str)
+        data = data.sort_values("fecha").copy()
+        data["mes"] = data["fecha"].dt.to_period("M")
         data_mes = data.groupby("mes").agg({"confirmados_dia": "sum"}).reset_index()
+        data_mes["mes_str"] = data_mes["mes"].dt.strftime("%b")
+        
+        # Encontrar el máximo
+        idx_max = data_mes["confirmados_dia"].idxmax()
+        colores = ["#a855f7" if i != idx_max else "#22c55e" for i in range(len(data_mes))]
 
-        fig = px.area(
-            data_mes,
-            x="mes",
-            y="confirmados_dia",
-            labels={"mes": "Mes", "confirmados_dia": "Casos Diarios"},
-            color_discrete_sequence=["#a855f7"],
-        )
-        fig.update_traces(fill="tozeroy")
+        fig = go.Figure()
+        fig.add_trace(go.Bar(
+            x=data_mes["mes_str"],
+            y=data_mes["confirmados_dia"],
+            marker_color=colores,
+            marker_line_color="#c084fc",
+            marker_line_width=1,
+            hovertemplate="<b>%{x}</b><br>Casos: %{y:,.0f}<extra></extra>",
+            text=[f"{v/1000:.0f}k" if v >= 1000 else str(int(v)) for v in data_mes["confirmados_dia"]],
+            textposition="outside",
+            textfont=dict(color="rgba(255,255,255,0.95)", size=13, weight="bold"),
+        ))
+
+        max_val = data_mes["confirmados_dia"].max()
+        mes_pico = data_mes.loc[idx_max, "mes_str"]
+
         fig.update_layout(
-            height=400,
+            autosize=True,
+            height=500,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="rgba(255,255,255,0.8)"),
-            xaxis=dict(gridcolor="rgba(255,255,255,0.1)", tickangle=-45),
-            yaxis=dict(gridcolor="rgba(255,255,255,0.1)"),
-            margin=dict(l=50, r=20, t=30, b=80),
+            font=dict(color="rgba(255,255,255,0.9)", size=12),
+            xaxis=dict(
+                title=dict(text="Mes 2020", font=dict(size=13)),
+                gridcolor="rgba(255,255,255,0.05)",
+                tickfont=dict(size=13, color="rgba(255,255,255,0.95)"),
+            ),
+            yaxis=dict(
+                title=dict(text="Casos", font=dict(size=13)),
+                gridcolor="rgba(255,255,255,0.1)",
+                tickfont=dict(size=11, color="rgba(255,255,255,0.8)"),
+            ),
+            margin=dict(l=60, r=20, t=40, b=60),
+            bargap=0.3,
+            annotations=[
+                dict(
+                    x=mes_pico,
+                    y=max_val,
+                    text="▲ PICO",
+                    showarrow=False,
+                    font=dict(color="#22c55e", size=12, weight="bold"),
+                    yshift=25,
+                )
+            ]
         )
         return fig
 
     @render_widget
-    def chart_muertes_pais():
+    def chart_muertes_mes():
+        """Gráfico de barras: muertes por mes"""
         data = datos_pais_filtrados()
         if len(data) == 0:
             fig = go.Figure()
             fig.update_layout(
-                height=400, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
+                height=500, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"
             )
             return fig
 
-        data = data.copy()
-        data["mes"] = data["fecha"].dt.to_period("M").astype(str)
+        data = data.sort_values("fecha").copy()
+        data["mes"] = data["fecha"].dt.to_period("M")
         data_mes = data.groupby("mes").agg({"muertes_dia": "sum"}).reset_index()
+        data_mes["mes_str"] = data_mes["mes"].dt.strftime("%b")
+        
+        # Encontrar el máximo
+        idx_max = data_mes["muertes_dia"].idxmax()
+        colores = ["#ef4444" if i != idx_max else "#f97316" for i in range(len(data_mes))]
 
-        fig = px.area(
-            data_mes,
-            x="mes",
-            y="muertes_dia",
-            labels={"mes": "Mes", "muertes_dia": "Muertes Diarias"},
-            color_discrete_sequence=["#ef4444"],
-        )
-        fig.update_traces(fill="tozeroy")
+        fig = go.Figure()
+        fig.add_trace(go.Bar(
+            x=data_mes["mes_str"],
+            y=data_mes["muertes_dia"],
+            marker_color=colores,
+            marker_line_color="#f87171",
+            marker_line_width=1,
+            hovertemplate="<b>%{x}</b><br>Muertes: %{y:,.0f}<extra></extra>",
+            text=[f"{v/1000:.1f}k" if v >= 1000 else str(int(v)) for v in data_mes["muertes_dia"]],
+            textposition="outside",
+            textfont=dict(color="rgba(255,255,255,0.95)", size=13, weight="bold"),
+        ))
+
+        max_val = data_mes["muertes_dia"].max()
+        mes_pico = data_mes.loc[idx_max, "mes_str"]
+
         fig.update_layout(
-            height=400,
+            autosize=True,
+            height=500,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="rgba(255,255,255,0.8)"),
-            xaxis=dict(gridcolor="rgba(255,255,255,0.1)", tickangle=-45),
-            yaxis=dict(gridcolor="rgba(255,255,255,0.1)"),
-            margin=dict(l=50, r=20, t=30, b=80),
+            font=dict(color="rgba(255,255,255,0.9)", size=12),
+            xaxis=dict(
+                title=dict(text="Mes 2020", font=dict(size=13)),
+                gridcolor="rgba(255,255,255,0.05)",
+                tickfont=dict(size=13, color="rgba(255,255,255,0.95)"),
+            ),
+            yaxis=dict(
+                title=dict(text="Muertes", font=dict(size=13)),
+                gridcolor="rgba(255,255,255,0.1)",
+                tickfont=dict(size=11, color="rgba(255,255,255,0.8)"),
+            ),
+            margin=dict(l=60, r=20, t=40, b=60),
+            bargap=0.3,
+            annotations=[
+                dict(
+                    x=mes_pico,
+                    y=max_val,
+                    text="▲ PICO",
+                    showarrow=False,
+                    font=dict(color="#f97316", size=12, weight="bold"),
+                    yshift=25,
+                )
+            ]
         )
         return fig
+
+    @output
+    @render.ui
+    def mensaje_relacion_picos():
+        """Mensaje que relaciona los picos de casos y muertes"""
+        data = datos_pais_filtrados()
+        if len(data) == 0:
+            return ui.div()
+
+        data = data.sort_values("fecha").copy()
+        data["mes"] = data["fecha"].dt.to_period("M")
+        data_mes = data.groupby("mes").agg({
+            "confirmados_dia": "sum",
+            "muertes_dia": "sum"
+        }).reset_index()
+        data_mes["mes_str"] = data_mes["mes"].dt.strftime("%b")
+        
+        idx_max_casos = data_mes["confirmados_dia"].idxmax()
+        idx_max_muertes = data_mes["muertes_dia"].idxmax()
+        mes_casos = data_mes.loc[idx_max_casos, "mes_str"]
+        mes_muertes = data_mes.loc[idx_max_muertes, "mes_str"]
+        
+        meses_orden = list(data_mes["mes_str"])
+        diff = meses_orden.index(mes_muertes) - meses_orden.index(mes_casos)
+        
+        if diff == 0:
+            texto = f"Casos y muertes alcanzaron su pico en el mismo mes: {mes_casos}"
+            color = "#22c55e"
+        elif diff > 0:
+            texto = f"El pico de muertes ({mes_muertes}) ocurrió {diff} mes(es) DESPUÉS del pico de casos ({mes_casos})"
+            color = "#f97316"
+        else:
+            texto = f"El pico de muertes ({mes_muertes}) ocurrió {abs(diff)} mes(es) ANTES del pico de casos ({mes_casos})"
+            color = "#3b82f6"
+        
+        return ui.HTML(f'''
+            <div style="
+                background: linear-gradient(90deg, rgba(99,102,241,0.2), rgba(168,85,247,0.2));
+                border: 1px solid rgba(168,85,247,0.4);
+                border-radius: 12px;
+                padding: 15px 30px;
+                display: inline-block;
+                font-size: 15px;
+                color: {color};
+                font-weight: 500;
+            ">
+                {texto}
+            </div>
+        ''')
 
 
 app = App(app_ui, server)
