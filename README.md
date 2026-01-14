@@ -98,11 +98,9 @@ El dashboard utiliza el archivo `panel_2020_paises_sin_nan_R_clean.csv` que cont
 ```
 .
 ├── app.py                                 # Aplicación principal Shiny
-├── generar_html.py                        # Script para generar versión HTML estática
 ├── panel_2020_paises_sin_nan_R_clean.csv  # Dataset COVID-19
 ├── requirements.txt                       # Dependencias Python
 ├── README.md                              # Documentación
-├── guion_video.txt                        # Guion para presentación en video
 ├── dashboard_covid19_2020.html            # Versión HTML estática (generada)
 └── .gitignore                             # Archivos ignorados por Git
 ```
@@ -139,14 +137,6 @@ El archivo `panel_2020_paises_sin_nan_R_clean.csv` contiene datos de +190 paíse
 | [NumPy](https://numpy.org/) | Operaciones numéricas |
 | [Uvicorn](https://www.uvicorn.org/) | Servidor ASGI |
 
-## 📄 Versión HTML Estática
-
-Si no puedes ejecutar la aplicación, puedes abrir directamente el archivo `dashboard_covid19_2020.html` en cualquier navegador. Esta versión incluye todos los gráficos interactivos pero sin los filtros dinámicos de Shiny.
-
-Para regenerar el HTML:
-```bash
-python generar_html.py
-```
 
 ## 📝 Licencia
 
@@ -154,4 +144,4 @@ Proyecto de uso académico - Asignatura de Visualización de Datos.
 
 ## 👤 Autor
 
-Desarrollado como trabajo académico.
+Desarrollado como trabajo académico por: Fernando Martínez Gómez, Sergio Ortiz Montesinos y Luis Trigueros Espada
