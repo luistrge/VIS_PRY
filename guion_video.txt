@@ -1,0 +1,204 @@
+================================================================================
+        GUION PARA VIDEO: ANÁLISIS DEL DASHBOARD COVID-19 2020
+                    Duración estimada: 4-5 minutos
+================================================================================
+
+
+--------------------------------------------------------------------------------
+🎬 INTRO (0:00 - 0:30)
+--------------------------------------------------------------------------------
+
+"Hola, en este video voy a presentar un dashboard interactivo que analiza el 
+impacto del COVID-19 durante el año 2020, correlacionando datos epidemiológicos 
+con indicadores económicos y de salud de más de 190 países.
+
+El dashboard está desarrollado con Shiny for Python y Plotly, y cuenta con dos 
+secciones principales: una visualización global comparativa y un análisis 
+detallado por país. Comencemos."
+
+
+--------------------------------------------------------------------------------
+🏠 PANTALLA DE INICIO (0:30 - 0:50)
+--------------------------------------------------------------------------------
+
+"La página de inicio nos presenta una vista general con cuatro KPIs clave: 
+el total de casos confirmados, las muertes totales, el número de países 
+analizados y la tasa de letalidad promedio.
+
+Desde aquí podemos acceder a las dos secciones del dashboard: Visualización 
+Global o Análisis por País."
+
+
+================================================================================
+                    SECCIÓN 1: VISUALIZACIÓN GLOBAL (0:50 - 3:30)
+================================================================================
+
+
+--------------------------------------------------------------------------------
+Gráfico 01 - Mapa Global de Incidencia (0:50 - 1:30)
+--------------------------------------------------------------------------------
+
+"El primer gráfico es un MAPA COROPLÉTICO ANIMADO que muestra la distribución 
+geográfica de la incidencia semanal por 100.000 habitantes. Podemos usar el 
+botón Play para ver la evolución temporal de la pandemia semana a semana 
+durante 2020, o usar el slider para navegar a una fecha específica.
+
+Los colores más claros representan mayor incidencia. Observamos cómo la 
+pandemia comenzó concentrada en Asia y Europa, y gradualmente se extendió 
+a América y el resto del mundo. Países como Estados Unidos, Brasil y varios 
+europeos muestran las mayores incidencias hacia finales del año."
+
+
+--------------------------------------------------------------------------------
+Gráfico 02 - Olas de Contagio (1:30 - 2:00)
+--------------------------------------------------------------------------------
+
+"El segundo gráfico es un RIDGELINE PLOT NORMALIZADO que compara las olas de 
+contagio entre países seleccionados. Cada país tiene su curva de casos 
+semanales normalizada al máximo, lo que permite comparar los patrones 
+temporales independientemente del tamaño de cada país.
+
+Podemos seleccionar los países a comparar. Aquí observamos claramente las 
+diferentes olas: algunos países tuvieron picos fuertes en primavera, otros 
+en otoño, y algunos experimentaron múltiples olas. Esto refleja las diferentes 
+dinámicas epidemiológicas y medidas de contención en cada región."
+
+
+--------------------------------------------------------------------------------
+Gráfico 03 - Incremento de Incidencia (2:00 - 2:30)
+--------------------------------------------------------------------------------
+
+"El tercer gráfico es un DUMBBELL CHART que muestra el incremento de incidencia 
+desde el inicio hasta el fin del período seleccionado. El punto verde representa 
+la incidencia inicial y el rojo la final.
+
+Podemos filtrar países y ajustar las fechas de inicio y fin para analizar 
+períodos específicos. Los países con líneas más largas experimentaron mayor 
+crecimiento. Esto nos permite identificar qué países fueron más afectados en 
+términos relativos durante el período analizado."
+
+
+--------------------------------------------------------------------------------
+Gráfico 04 - Gasto en Salud vs Letalidad (2:30 - 2:50)
+--------------------------------------------------------------------------------
+
+"El cuarto gráfico es un SCATTER PLOT que explora la relación entre el gasto 
+en salud como porcentaje del PIB y la tasa de letalidad. El tamaño de las 
+burbujas representa la población y el color indica el PIB per cápita.
+
+Un análisis interesante aquí es observar si mayor inversión en salud se traduce 
+en menor letalidad. Los resultados muestran que no hay una correlación lineal 
+directa, sugiriendo que otros factores como la capacidad de respuesta y las 
+políticas sanitarias juegan roles importantes."
+
+
+--------------------------------------------------------------------------------
+Gráfico 05 - Matriz de Eficiencia Sanitaria (2:50 - 3:30)
+--------------------------------------------------------------------------------
+
+"El quinto gráfico es una MATRIZ BIDIMENSIONAL que cruza incidencia contra 
+letalidad, dividiendo los países en cuadrantes según las medianas. Las líneas 
+punteadas marcan estos umbrales.
+
+El cuadrante superior derecho representa el peor escenario: alta incidencia y 
+alta letalidad. El inferior izquierdo es el mejor: baja incidencia y baja 
+letalidad. Los colores indican el gasto en salud. Esta visualización permite 
+identificar rápidamente la eficiencia relativa de cada sistema sanitario 
+frente a la pandemia."
+
+
+================================================================================
+                    SECCIÓN 2: ANÁLISIS POR PAÍS (3:30 - 4:30)
+================================================================================
+
+"Ahora pasamos al análisis por país, donde podemos seleccionar cualquier país 
+y un rango de fechas."
+
+
+--------------------------------------------------------------------------------
+KPIs del País (3:35 - 3:45)
+--------------------------------------------------------------------------------
+
+"Al seleccionar un país, se actualizan cinco KPIs específicos: casos confirmados, 
+muertes totales, incidencia por 100k habitantes, tasa de letalidad y gasto en 
+salud como porcentaje del PIB."
+
+
+--------------------------------------------------------------------------------
+Gráfico 01 - Evolución Temporal (3:45 - 4:00)
+--------------------------------------------------------------------------------
+
+"El primer gráfico muestra la EVOLUCIÓN DE CASOS ACUMULADOS a lo largo del 
+tiempo, permitiendo ver el ritmo de crecimiento mensual y las fases de 
+aceleración o desaceleración de la pandemia en ese país."
+
+
+--------------------------------------------------------------------------------
+Gráfico 02 - Comparativa Mundial (4:00 - 4:15)
+--------------------------------------------------------------------------------
+
+"El segundo gráfico es un GRÁFICO DE BARRAS COMPARATIVO que contrasta cuatro 
+indicadores del país seleccionado versus la media mundial: letalidad, incidencia, 
+mortalidad y gasto en salud. Esto contextualiza la situación del país respecto 
+al promedio global."
+
+
+--------------------------------------------------------------------------------
+Gráficos 03 y 04 - Casos y Muertes por Mes (4:15 - 4:45)
+--------------------------------------------------------------------------------
+
+"Los dos últimos gráficos muestran CASOS Y MUERTES POR MES en formato de barras. 
+El mes con el pico máximo está resaltado en un color diferente.
+
+Además, el dashboard genera automáticamente un mensaje que relaciona ambos picos: 
+si coinciden, si las muertes ocurrieron después de los casos —lo esperado 
+epidemiológicamente—, o si hubo algún patrón diferente. Este desfase típicamente 
+refleja el tiempo entre el contagio y los desenlaces fatales."
+
+
+--------------------------------------------------------------------------------
+🎬 CIERRE (4:45 - 5:00)
+--------------------------------------------------------------------------------
+
+"En resumen, este dashboard permite analizar la pandemia COVID-19 de 2020 desde 
+múltiples perspectivas: evolución temporal, distribución geográfica, comparativas 
+entre países e indicadores socioeconómicos relacionados. Los datos provienen de 
+la OMS y el Banco Mundial.
+
+Gracias por ver este análisis. El código está disponible en el repositorio."
+
+
+================================================================================
+                            RESUMEN DE TIEMPOS
+================================================================================
+
+  Sección                              | Inicio  | Fin     | Duración
+  -------------------------------------|---------|---------|----------
+  Intro                                | 0:00    | 0:30    | 30 seg
+  Pantalla de Inicio                   | 0:30    | 0:50    | 20 seg
+  Mapa Global de Incidencia            | 0:50    | 1:30    | 40 seg
+  Olas de Contagio (Ridgeline)         | 1:30    | 2:00    | 30 seg
+  Incremento de Incidencia (Dumbbell)  | 2:00    | 2:30    | 30 seg
+  Gasto en Salud vs Letalidad          | 2:30    | 2:50    | 20 seg
+  Matriz de Eficiencia Sanitaria       | 2:50    | 3:30    | 40 seg
+  KPIs del País                        | 3:35    | 3:45    | 10 seg
+  Evolución Temporal                   | 3:45    | 4:00    | 15 seg
+  Comparativa Mundial                  | 4:00    | 4:15    | 15 seg
+  Casos y Muertes por Mes              | 4:15    | 4:45    | 30 seg
+  Cierre                               | 4:45    | 5:00    | 15 seg
+  -------------------------------------|---------|---------|----------
+  TOTAL                                |         |         | ~5 min
+
+================================================================================
+                        NOTAS PARA LA GRABACIÓN
+================================================================================
+
+• Hablar pausado pero fluido, sin prisas
+• Mostrar cada gráfico mientras se explica
+• Interactuar con los filtros y selectores cuando se mencionen
+• Hacer hover sobre los datos para mostrar los tooltips
+• En el mapa animado, presionar Play y dejar correr unos segundos
+• En la sección de país, seleccionar un país conocido (ej: España, México)
+• Preparar los países preseleccionados antes de grabar
+
+================================================================================

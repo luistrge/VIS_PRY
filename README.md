@@ -2,7 +2,7 @@
 
 Dashboard interactivo para la visualización y análisis de datos de COVID-19 durante el año 2020, desarrollado con **Shiny for Python** y **Plotly**.
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![Shiny](https://img.shields.io/badge/Shiny-Python-green.svg)
 ![Plotly](https://img.shields.io/badge/Plotly-Interactive-orange.svg)
 
@@ -21,14 +21,18 @@ Este dashboard proporciona una visualización completa de la pandemia COVID-19 c
 - **KPIs del país**: Casos, muertes, incidencia, letalidad y gasto en salud
 - **Evolución temporal** de casos confirmados
 - **Comparativa mundial** - Comparación del país con la media mundial
-- **Casos diarios** y **Muertes diarias** - Evolución temporal
+- **Casos por mes** y **Muertes por mes** - Evolución temporal con identificación de picos
 
-## 🚀 Instalación
+## 🚀 Instalación y Ejecución
+
+### Requisitos previos
+- Python 3.10 o superior
+- pip (gestor de paquetes de Python)
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
-cd tu-repo
+git clone <URL_DEL_REPOSITORIO>
+cd Trabajo_Académico
 ```
 
 ### 2. Crear entorno virtual (recomendado)
@@ -93,32 +97,61 @@ El dashboard utiliza el archivo `panel_2020_paises_sin_nan_R_clean.csv` que cont
 
 ```
 .
-├── app.py                                 # Aplicación principal
-├── panel_2020_paises_sin_nan_R_clean.csv  # Datos COVID-19
+├── app.py                                 # Aplicación principal Shiny
+├── generar_html.py                        # Script para generar versión HTML estática
+├── panel_2020_paises_sin_nan_R_clean.csv  # Dataset COVID-19
 ├── requirements.txt                       # Dependencias Python
-├── README.md                              # Este archivo
+├── README.md                              # Documentación
+├── guion_video.txt                        # Guion para presentación en video
+├── dashboard_covid19_2020.html            # Versión HTML estática (generada)
 └── .gitignore                             # Archivos ignorados por Git
 ```
 
-## 📸 Capturas de pantalla
+## 📊 Dataset
 
-### Página de Inicio
-Landing page con KPIs globales y navegación a las secciones.
+El archivo `panel_2020_paises_sin_nan_R_clean.csv` contiene datos de +190 países con las siguientes variables:
 
-### Visualización Global
-Mapa interactivo animado y gráficos comparativos entre países.
+| Variable | Descripción |
+|----------|-------------|
+| `pais` | Nombre del país |
+| `iso3c` | Código ISO 3166-1 alpha-3 |
+| `fecha` | Fecha del registro |
+| `confirmados` | Casos confirmados acumulados |
+| `muertes` | Muertes acumuladas |
+| `confirmados_dia` | Nuevos casos diarios |
+| `muertes_dia` | Nuevas muertes diarias |
+| `IA_100k` | Incidencia acumulada por 100.000 habitantes |
+| `tasa_mortalidad_100k` | Tasa de mortalidad por 100.000 habitantes |
+| `letalidad_CFR_pct` | Tasa de letalidad (Case Fatality Rate) en % |
+| `pib_per_capita_2019` | PIB per cápita 2019 (USD) |
+| `gasto_salud_pib` | Gasto en salud como % del PIB |
+| `poblacion` | Población del país |
 
-### Análisis por País
-Filtros por país y fechas, con gráficos de evolución temporal y comparativa mundial.
+**Fuentes**: WHO (Organización Mundial de la Salud) & World Bank
+
+## 🛠️ Tecnologías
+
+| Tecnología | Uso |
+|------------|-----|
+| [Shiny for Python](https://shiny.posit.co/py/) | Framework web interactivo |
+| [Plotly](https://plotly.com/python/) | Gráficos interactivos |
+| [Pandas](https://pandas.pydata.org/) | Procesamiento de datos |
+| [NumPy](https://numpy.org/) | Operaciones numéricas |
+| [Uvicorn](https://www.uvicorn.org/) | Servidor ASGI |
+
+## 📄 Versión HTML Estática
+
+Si no puedes ejecutar la aplicación, puedes abrir directamente el archivo `dashboard_covid19_2020.html` en cualquier navegador. Esta versión incluye todos los gráficos interactivos pero sin los filtros dinámicos de Shiny.
+
+Para regenerar el HTML:
+```bash
+python generar_html.py
+```
 
 ## 📝 Licencia
 
-Este proyecto es de uso académico.
+Proyecto de uso académico - Asignatura de Visualización de Datos.
 
 ## 👤 Autor
 
-Desarrollado como trabajo académico para la asignatura de Visualización de Datos.
-
----
-
-*Dashboard COVID-19 2020 | Datos: WHO & World Bank | Shiny for Python + Plotly*
+Desarrollado como trabajo académico.
