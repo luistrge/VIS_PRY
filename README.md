@@ -31,8 +31,8 @@ Este dashboard proporciona una visualización completa de la pandemia COVID-19 c
 
 ### 1. Clonar el repositorio
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd Trabajo_Académico
+git clone https://github.com/luistrge/VIS_PRY trabajo_academico
+cd trabajo_academico
 ```
 
 ### 2. Crear entorno virtual (recomendado)
