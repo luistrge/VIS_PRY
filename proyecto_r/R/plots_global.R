@@ -73,7 +73,7 @@ create_choropleth_map <- function(df) {
       paper_bgcolor = "rgba(0,0,0,0)",
       plot_bgcolor = "rgba(0,0,0,0)",
       font = list(color = "rgba(255,255,255,0.8)"),
-      margin = list(l = 0, r = 0, t = 10, b = 100) # Bottom margin for slider
+      margin = list(l = 80, r = 80, t = 10, b = 200) # Bottom margin for slider
     ) %>%
     # 5. Explicitly Style Animation Controls (White Text & Visible Buttons)
     animation_opts(

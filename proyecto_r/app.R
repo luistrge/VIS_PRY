@@ -255,7 +255,7 @@ server <- function(input, output, session) {
         ),
         div(
           class = "chart-content",
-          plotlyOutput("chart_mapa_global", height = "450px")
+          plotlyOutput("chart_mapa_global", height = "600px")
         )
       ),
 
