@@ -13,11 +13,31 @@ create_choropleth_map <- function(df) {
     # Safety check: Replace Infinite or NaN values to prevent rendering errors
     dplyr::mutate(IA_100k_semanal = ifelse(is.finite(IA_100k_semanal), IA_100k_semanal, 0))
 
-  # 2. Calculate max scale (robust)
+  # CRITICAL: Complete all combinations of countries and weeks
+  # This ensures animation frames work correctly
+  data_map <- data_map %>%
+    tidyr::complete(
+      iso3c, semana_str,
+      fill = list(IA_100k_semanal = 0, pais = NA)
+    ) %>%
+    dplyr::arrange(semana_str, iso3c)
+
+  # Fill missing country names
+  country_mapping <- data_map %>%
+    dplyr::filter(!is.na(pais)) %>%
+    dplyr::select(iso3c, pais) %>%
+    dplyr::distinct()
+
+  data_map <- data_map %>%
+    dplyr::left_join(country_mapping, by = "iso3c", suffix = c("", ".y")) %>%
+    dplyr::mutate(pais = dplyr::coalesce(pais, pais.y)) %>%
+    dplyr::select(-pais.y)
+
+  # 3. Calculate max scale (robust)
   max_incidencia <- quantile(data_map$IA_100k_semanal, 0.95, na.rm = TRUE)
   if (is.na(max_incidencia) || max_incidencia == 0) max_incidencia <- 100
 
-  # 3. Define colorscale as list of lists (Critical for R Plotly)
+  # 4. Define colorscale as list of lists (Critical for R Plotly)
   custom_colorscale <- list(
     list(0, "#07131f"),
     list(0.1, "#0b1f2d"),
@@ -29,7 +49,7 @@ create_choropleth_map <- function(df) {
     list(1, "#f59e0b")
   )
 
-  # 4. Create Animated Map
+  # 5. Create Animated Map
   fig <- plot_geo(data_map) %>%
     add_trace(
       type = "choropleth",
@@ -75,7 +95,7 @@ create_choropleth_map <- function(df) {
       font = list(color = "rgba(255,255,255,0.8)"),
       margin = list(l = 80, r = 80, t = 10, b = 200) # Bottom margin for slider
     ) %>%
-    # 5. Explicitly Style Animation Controls (White Text & Visible Buttons)
+    # 6. Explicitly Style Animation Controls (White Text & Visible Buttons)
     animation_opts(
       frame = 200,
       transition = 200,
