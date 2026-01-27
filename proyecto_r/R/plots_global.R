@@ -2,46 +2,39 @@
 # GLOBAL PAGE CHART FUNCTIONS
 # ==============================================================================
 
-#' Create choropleth map (static version showing latest data)
+#' Create choropleth map (animated by week)
 #'
 #' @param df COVID data frame
 #' @return Plotly figure
 create_choropleth_map <- function(df) {
-  # Get latest data per country
-  data_map <- df %>%
-    dplyr::group_by(pais, iso3c) %>%
-    dplyr::summarise(
-      IA_100k = max(IA_100k, na.rm = TRUE),
-      confirmados = max(confirmados, na.rm = TRUE),
-      muertes = max(muertes, na.rm = TRUE),
-      poblacion = dplyr::first(poblacion),
-      .groups = "drop"
-    ) %>%
+  # Aggregate weekly data for animation frames
+  data_map <- aggregate_weekly(df) %>%
     dplyr::filter(!is.na(iso3c) & iso3c != "")
 
   # Get max incidence for color scale (use 95th percentile to avoid outliers)
-  max_incidencia <- quantile(data_map$IA_100k, 0.95, na.rm = TRUE)
+  max_incidencia <- quantile(data_map$IA_100k_semanal, 0.95, na.rm = TRUE)
   if (is.na(max_incidencia) || max_incidencia == 0) {
-    max_incidencia <- max(data_map$IA_100k, na.rm = TRUE)
+    max_incidencia <- max(data_map$IA_100k_semanal, na.rm = TRUE)
   }
   if (is.na(max_incidencia) || max_incidencia == 0) max_incidencia <- 100
 
-  # Create choropleth using plot_geo for better compatibility
-  fig <- plot_ly() %>%
+  # Animated choropleth using plot_geo + frames
+  fig <- plot_geo(data_map) %>%
     add_trace(
       type = "choropleth",
-      locations = data_map$iso3c,
-      z = data_map$IA_100k,
-      text = data_map$pais,
+      locations = ~iso3c,
+      z = ~IA_100k_semanal,
+      text = ~pais,
+      frame = ~semana_str,
       colorscale = list(
-        c(0, "#0f0a2e"),
-        c(0.1, "#1e1b4b"),
-        c(0.25, "#3730a3"),
-        c(0.4, "#4f46e5"),
-        c(0.55, "#6366f1"),
-        c(0.7, "#818cf8"),
-        c(0.85, "#a5b4fc"),
-        c(1, "#e0e7ff")
+        list(0, "#0f0a2e"),
+        list(0.1, "#1e1b4b"),
+        list(0.25, "#3730a3"),
+        list(0.4, "#4f46e5"),
+        list(0.55, "#6366f1"),
+        list(0.7, "#818cf8"),
+        list(0.85, "#a5b4fc"),
+        list(1, "#e0e7ff")
       ),
       zmin = 0,
       zmax = max_incidencia,
@@ -56,7 +49,7 @@ create_choropleth_map <- function(df) {
         borderwidth = 1,
         tickfont = list(color = "rgba(255,255,255,0.8)", size = 10)
       ),
-      hovertemplate = "<b>%{text}</b><br>Incidencia: %{z:,.1f}/100k<extra></extra>"
+      hovertemplate = "<b>%{text}</b><br>Semana: %{frame}<br>Incidencia: %{z:,.1f}/100k<extra></extra>"
     ) %>%
     layout(
       geo = list(
@@ -79,7 +72,9 @@ create_choropleth_map <- function(df) {
       plot_bgcolor = "rgba(0,0,0,0)",
       font = list(color = "rgba(255,255,255,0.8)"),
       margin = list(l = 0, r = 0, t = 10, b = 30)
-    )
+    ) %>%
+    animation_opts(frame = 200, transition = 200, redraw = FALSE) %>%
+    animation_slider()
 
   return(fig)
 }
