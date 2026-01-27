@@ -54,10 +54,18 @@ server <- function(input, output, session) {
   # ============================================================================
   # NAVIGATION
   # ============================================================================
-  observeEvent(input$btn_global, { current_page("global") })
-  observeEvent(input$btn_pais, { current_page("pais") })
-  observeEvent(input$btn_volver_global, { current_page("inicio") })
-  observeEvent(input$btn_volver_pais, { current_page("inicio") })
+  observeEvent(input$btn_global, {
+    current_page("global")
+  })
+  observeEvent(input$btn_pais, {
+    current_page("pais")
+  })
+  observeEvent(input$btn_volver_global, {
+    current_page("inicio")
+  })
+  observeEvent(input$btn_volver_pais, {
+    current_page("inicio")
+  })
 
   # ============================================================================
   # LANDING PAGE
@@ -235,22 +243,30 @@ server <- function(input, output, session) {
       ')),
 
       # Chart 1: Choropleth Map
-      div(class = "chart-section map-section",
-        div(class = "section-header",
+      div(
+        class = "chart-section map-section",
+        div(
+          class = "section-header",
           tags$span("01", class = "section-number"),
           div(
             div("Mapa Global de Incidencia", class = "section-title"),
             div("Distribucion geografica de casos por 100.000 habitantes", class = "section-subtitle")
           )
         ),
-        plotlyOutput("chart_mapa_global", height = "600px")
+        div(
+          class = "chart-content",
+          plotlyOutput("chart_mapa_global", height = "450px")
+        )
       ),
 
       # Charts 2-5: Grid
-      div(class = "charts-grid",
+      div(
+        class = "charts-grid",
         # Chart 2: Ridgeline
-        div(class = "chart-section",
-          div(class = "section-header",
+        div(
+          class = "chart-section",
+          div(
+            class = "section-header",
             tags$span("02", class = "section-number"),
             div(
               div("Olas de Contagio", class = "section-title"),
@@ -258,19 +274,25 @@ server <- function(input, output, session) {
             )
           ),
           fluidRow(
-            column(12,
+            column(
+              12,
               selectizeInput("paises_wave", "Seleccionar paises:",
                 choices = paises, selected = head(paises, 5), multiple = TRUE,
                 options = list(maxItems = 8)
               )
             )
           ),
-          plotlyOutput("chart_wave_global", height = "400px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_wave_global", height = "450px")
+          )
         ),
 
         # Chart 3: Dumbbell
-        div(class = "chart-section",
-          div(class = "section-header",
+        div(
+          class = "chart-section",
+          div(
+            class = "section-header",
             tags$span("03", class = "section-number"),
             div(
               div("Incremento de Incidencia", class = "section-title"),
@@ -278,7 +300,8 @@ server <- function(input, output, session) {
             )
           ),
           fluidRow(
-            column(6,
+            column(
+              6,
               selectizeInput("paises_dumbbell", "Seleccionar paises:",
                 choices = paises, selected = head(paises, 10), multiple = TRUE,
                 options = list(maxItems = 15)
@@ -287,24 +310,34 @@ server <- function(input, output, session) {
             column(3, dateInput("fecha_inicio_dumbbell", "Fecha inicio:", value = fecha_min, min = fecha_min, max = fecha_max)),
             column(3, dateInput("fecha_fin_dumbbell", "Fecha fin:", value = fecha_max, min = fecha_min, max = fecha_max))
           ),
-          plotlyOutput("chart_dumbbell_global", height = "400px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_dumbbell_global", height = "450px")
+          )
         ),
 
         # Chart 4: Health vs Lethality
-        div(class = "chart-section",
-          div(class = "section-header",
+        div(
+          class = "chart-section",
+          div(
+            class = "section-header",
             tags$span("04", class = "section-number"),
             div(
               div("Gasto en Salud vs Letalidad", class = "section-title"),
               div("Inversion sanitaria y tasa de letalidad", class = "section-subtitle")
             )
           ),
-          plotlyOutput("chart_salud_global", height = "400px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_salud_global", height = "450px")
+          )
         ),
 
         # Chart 5: Efficiency Matrix
-        div(class = "chart-section",
-          div(class = "section-header",
+        div(
+          class = "chart-section chart-efficiency",
+          div(
+            class = "section-header",
             tags$span("05", class = "section-number"),
             div(
               div("Matriz de Eficiencia Sanitaria", class = "section-title"),
@@ -312,14 +345,18 @@ server <- function(input, output, session) {
             )
           ),
           fluidRow(
-            column(12,
+            column(
+              12,
               selectizeInput("paises_efficiency", "Filtrar paises (vacio = todos):",
                 choices = paises, selected = NULL, multiple = TRUE,
                 options = list(maxItems = 20)
               )
             )
           ),
-          plotlyOutput("chart_efficiency_global", height = "400px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_efficiency_global", height = "450px")
+          )
         )
       ),
 
@@ -395,8 +432,10 @@ server <- function(input, output, session) {
       '),
 
       # Filter panel
-      div(class = "filter-panel",
-        div(class = "filter-header",
+      div(
+        class = "filter-panel",
+        div(
+          class = "filter-header",
           HTML('<div class="filter-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;vertical-align:middle;margin-right:8px"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>Selecciona un Pais</div>')
         ),
         fluidRow(
@@ -410,55 +449,78 @@ server <- function(input, output, session) {
       uiOutput("kpis_pais"),
 
       # Charts row 1
-      div(class = "charts-row",
-        div(class = "chart-section",
-          div(class = "section-header",
+      div(
+        class = "charts-row",
+        div(
+          class = "chart-section",
+          div(
+            class = "section-header",
             tags$span("01", class = "section-number"),
             div(
               div("Evolucion Temporal", class = "section-title"),
               div("Evolucion de casos confirmados a lo largo del tiempo", class = "section-subtitle")
             )
           ),
-          plotlyOutput("chart_temporal_pais", height = "350px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_temporal_pais", height = "450px")
+          )
         ),
-        div(class = "chart-section",
-          div(class = "section-header",
+        div(
+          class = "chart-section",
+          div(
+            class = "section-header",
             tags$span("02", class = "section-number"),
             div(
               div("Comparativa Mundial", class = "section-title"),
               div("Comparacion del pais con la media mundial", class = "section-subtitle")
             )
           ),
-          plotlyOutput("chart_gauge_pais", height = "350px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_gauge_pais", height = "450px")
+          )
         )
       ),
 
       # Charts row 2
-      div(class = "charts-row",
-        div(class = "chart-section",
-          div(class = "section-header",
+      div(
+        class = "charts-row",
+        div(
+          class = "chart-section",
+          div(
+            class = "section-header",
             tags$span("03", class = "section-number"),
             div(
               div("Casos por Mes", class = "section-title"),
               div("Nuevos contagios mensuales", class = "section-subtitle")
             )
           ),
-          plotlyOutput("chart_casos_mes", height = "350px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_casos_mes", height = "450px")
+          )
         ),
-        div(class = "chart-section",
-          div(class = "section-header",
+        div(
+          class = "chart-section",
+          div(
+            class = "section-header",
             tags$span("04", class = "section-number"),
             div(
               div("Muertes por Mes", class = "section-title"),
               div("Fallecimientos mensuales", class = "section-subtitle")
             )
           ),
-          plotlyOutput("chart_muertes_mes", height = "350px")
+          div(
+            class = "chart-content",
+            plotlyOutput("chart_muertes_mes", height = "450px")
+          )
         )
       ),
 
       # Peak relationship message
-      div(style = "text-align: center; margin-top: -10px; margin-bottom: 20px;",
+      div(
+        style = "text-align: center; margin-top: -10px; margin-bottom: 20px;",
         uiOutput("mensaje_relacion_picos")
       ),
 

@@ -19,14 +19,14 @@ create_choropleth_map <- function(df) {
 
   # 3. Define colorscale as list of lists (Critical for R Plotly)
   custom_colorscale <- list(
-    list(0, "#0f0a2e"),
-    list(0.1, "#1e1b4b"),
-    list(0.25, "#3730a3"),
-    list(0.4, "#4f46e5"),
-    list(0.55, "#6366f1"),
-    list(0.7, "#818cf8"),
-    list(0.85, "#a5b4fc"),
-    list(1, "#e0e7ff")
+    list(0, "#07131f"),
+    list(0.1, "#0b1f2d"),
+    list(0.25, "#0f2f3f"),
+    list(0.4, "#0f4a58"),
+    list(0.55, "#118a7e"),
+    list(0.7, "#22c55e"),
+    list(0.85, "#84cc16"),
+    list(1, "#f59e0b")
   )
 
   # 4. Create Animated Map
@@ -36,7 +36,7 @@ create_choropleth_map <- function(df) {
       locations = ~iso3c,
       z = ~IA_100k_semanal,
       text = ~pais,
-      frame = ~semana_str,     # Animation Frame
+      frame = ~semana_str, # Animation Frame
       colorscale = custom_colorscale,
       zmin = 0,
       zmax = max_incidencia,
@@ -107,7 +107,7 @@ create_choropleth_map <- function(df) {
 create_ridgeline_plot <- function(df, selected_countries) {
   if (is.null(selected_countries) || length(selected_countries) == 0) {
     return(plot_ly() %>%
-             layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
+      layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
   }
 
   # Aggregate by week
@@ -204,7 +204,7 @@ create_ridgeline_plot <- function(df, selected_countries) {
 create_dumbbell_chart <- function(df, selected_countries, fecha_inicio, fecha_fin) {
   if (is.null(selected_countries) || length(selected_countries) == 0) {
     return(plot_ly() %>%
-             layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
+      layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
   }
 
   data <- df %>%
@@ -234,7 +234,7 @@ create_dumbbell_chart <- function(df, selected_countries, fecha_inicio, fecha_fi
 
   if (nrow(data_dumbbell) == 0) {
     return(plot_ly() %>%
-             layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
+      layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
   }
 
   fig <- plot_ly()
@@ -331,7 +331,7 @@ create_health_lethality_scatter <- function(df_ultimo) {
 
   if (nrow(data) == 0) {
     return(plot_ly() %>%
-             layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
+      layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
   }
 
   # Calculate bubble sizes
@@ -406,7 +406,7 @@ create_efficiency_matrix <- function(df_ultimo, selected_countries = NULL) {
 
   if (nrow(data) == 0) {
     return(plot_ly() %>%
-             layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
+      layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)"))
   }
 
   median_incidencia <- median(data$IA_100k, na.rm = TRUE)
