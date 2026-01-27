@@ -7,40 +7,42 @@
 #' @param df COVID data frame
 #' @return Plotly figure
 create_choropleth_map <- function(df) {
-  # Aggregate weekly data for animation frames
+  # 1. Prepare data using the helper function
   data_map <- aggregate_weekly(df) %>%
-    dplyr::filter(!is.na(iso3c) & iso3c != "")
+    dplyr::filter(!is.na(iso3c) & iso3c != "") %>%
+    # Safety check: Replace Infinite or NaN values to prevent rendering errors
+    dplyr::mutate(IA_100k_semanal = ifelse(is.finite(IA_100k_semanal), IA_100k_semanal, 0))
 
-  # Get max incidence for color scale (use 95th percentile to avoid outliers)
+  # 2. Calculate max scale (robust)
   max_incidencia <- quantile(data_map$IA_100k_semanal, 0.95, na.rm = TRUE)
-  if (is.na(max_incidencia) || max_incidencia == 0) {
-    max_incidencia <- max(data_map$IA_100k_semanal, na.rm = TRUE)
-  }
   if (is.na(max_incidencia) || max_incidencia == 0) max_incidencia <- 100
 
-  # Animated choropleth using plot_geo + frames
+  # 3. Define colorscale as list of lists (Critical for R Plotly)
+  custom_colorscale <- list(
+    list(0, "#0f0a2e"),
+    list(0.1, "#1e1b4b"),
+    list(0.25, "#3730a3"),
+    list(0.4, "#4f46e5"),
+    list(0.55, "#6366f1"),
+    list(0.7, "#818cf8"),
+    list(0.85, "#a5b4fc"),
+    list(1, "#e0e7ff")
+  )
+
+  # 4. Create Animated Map
   fig <- plot_geo(data_map) %>%
     add_trace(
       type = "choropleth",
       locations = ~iso3c,
       z = ~IA_100k_semanal,
       text = ~pais,
-      frame = ~semana_str,
-      colorscale = list(
-        list(0, "#0f0a2e"),
-        list(0.1, "#1e1b4b"),
-        list(0.25, "#3730a3"),
-        list(0.4, "#4f46e5"),
-        list(0.55, "#6366f1"),
-        list(0.7, "#818cf8"),
-        list(0.85, "#a5b4fc"),
-        list(1, "#e0e7ff")
-      ),
+      frame = ~semana_str,     # Animation Frame
+      colorscale = custom_colorscale,
       zmin = 0,
       zmax = max_incidencia,
       marker = list(line = list(color = "rgba(99,102,241,0.25)", width = 0.3)),
       colorbar = list(
-        title = list(text = "Incidencia<br>Acumulada/100k", font = list(size = 11, color = "white")),
+        title = list(text = "Incidencia<br>Semanal/100k", font = list(size = 11, color = "white")),
         thickness = 18,
         len = 0.75,
         x = 0.98,
@@ -67,14 +69,32 @@ create_choropleth_map <- function(df) {
         countrycolor = "rgba(99,102,241,0.25)",
         countrywidth = 0.3
       ),
-      height = 500,
+      height = 550,
       paper_bgcolor = "rgba(0,0,0,0)",
       plot_bgcolor = "rgba(0,0,0,0)",
       font = list(color = "rgba(255,255,255,0.8)"),
-      margin = list(l = 0, r = 0, t = 10, b = 100)
+      margin = list(l = 0, r = 0, t = 10, b = 100) # Bottom margin for slider
     ) %>%
-    animation_opts(frame = 200, transition = 200, redraw = FALSE) %>%
-    animation_slider()
+    # 5. Explicitly Style Animation Controls (White Text & Visible Buttons)
+    animation_opts(
+      frame = 200,
+      transition = 200,
+      redraw = FALSE
+    ) %>%
+    animation_slider(
+      currentvalue = list(
+        prefix = "Semana: ",
+        font = list(color = "white", size = 14)
+      ),
+      font = list(color = "white")
+    ) %>%
+    animation_button(
+      x = 0.02, xanchor = "left", y = 0, yanchor = "top",
+      label = "Play",
+      font = list(color = "white"),
+      bgcolor = "rgba(99,102,241,0.8)",
+      bordercolor = "rgba(255,255,255,0.5)"
+    )
 
   return(fig)
 }
