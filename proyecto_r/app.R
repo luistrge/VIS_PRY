@@ -16,6 +16,7 @@ library(rlang)
 
 # Source helper files
 source("R/utils.R")
+source("R/data_processing.R")
 source("R/plots_global.R")
 source("R/plots_country.R")
 
@@ -242,7 +243,7 @@ server <- function(input, output, session) {
             div("Distribucion geografica de casos por 100.000 habitantes", class = "section-subtitle")
           )
         ),
-        plotlyOutput("chart_mapa_global", height = "500px")
+        plotlyOutput("chart_mapa_global", height = "600px")
       ),
 
       # Charts 2-5: Grid
