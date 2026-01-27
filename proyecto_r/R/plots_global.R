@@ -71,7 +71,7 @@ create_choropleth_map <- function(df) {
       paper_bgcolor = "rgba(0,0,0,0)",
       plot_bgcolor = "rgba(0,0,0,0)",
       font = list(color = "rgba(255,255,255,0.8)"),
-      margin = list(l = 0, r = 0, t = 10, b = 30)
+      margin = list(l = 0, r = 0, t = 10, b = 100)
     ) %>%
     animation_opts(frame = 200, transition = 200, redraw = FALSE) %>%
     animation_slider()
