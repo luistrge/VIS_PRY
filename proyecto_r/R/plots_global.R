@@ -38,29 +38,34 @@ create_choropleth_map <- function(df) {
   if (is.na(max_incidencia) || max_incidencia == 0) max_incidencia <- 100
 
   # 4. Define colorscale as list of lists (Critical for R Plotly)
+  # Red-Yellow Heat colorscale - dark to bright intensity
   custom_colorscale <- list(
-    list(0, "#07131f"),
-    list(0.1, "#0b1f2d"),
-    list(0.25, "#0f2f3f"),
-    list(0.4, "#0f4a58"),
-    list(0.55, "#118a7e"),
-    list(0.7, "#22c55e"),
-    list(0.85, "#84cc16"),
-    list(1, "#f59e0b")
+    list(0, "#1a0a0a"),
+    list(0.15, "#3d0c0c"),
+    list(0.3, "#7a1515"),
+    list(0.45, "#b91c1c"),
+    list(0.6, "#dc2626"),
+    list(0.75, "#f97316"),
+    list(0.9, "#fbbf24"),
+    list(1, "#fef08a")
   )
 
   # 5. Create Animated Map
+  # NOTE: In R Plotly, %{frame} doesn't work in hovertemplate for choropleth.
+  # Use customdata to pass the week info for hover display.
+  # CRITICAL: redraw = TRUE is required for choropleth animations to update properly
   fig <- plot_geo(data_map) %>%
     add_trace(
       type = "choropleth",
       locations = ~iso3c,
       z = ~IA_100k_semanal,
       text = ~pais,
+      customdata = ~semana_str,
       frame = ~semana_str, # Animation Frame
       colorscale = custom_colorscale,
       zmin = 0,
       zmax = max_incidencia,
-      marker = list(line = list(color = "rgba(99,102,241,0.25)", width = 0.3)),
+      marker = list(line = list(color = "rgba(255,255,255,0.3)", width = 0.5)),
       colorbar = list(
         title = list(text = "Incidencia<br>Semanal/100k", font = list(size = 11, color = "white")),
         thickness = 18,
@@ -71,22 +76,22 @@ create_choropleth_map <- function(df) {
         borderwidth = 1,
         tickfont = list(color = "rgba(255,255,255,0.8)", size = 10)
       ),
-      hovertemplate = "<b>%{text}</b><br>Semana: %{frame}<br>Incidencia: %{z:,.1f}/100k<extra></extra>"
+      hovertemplate = "<b>%{text}</b><br>Semana: %{customdata}<br>Incidencia: %{z:,.1f}/100k<extra></extra>"
     ) %>%
     layout(
       geo = list(
         showframe = FALSE,
         showcoastlines = TRUE,
-        coastlinecolor = "rgba(99,102,241,0.5)",
+        coastlinecolor = "rgba(255,255,255,0.4)",
         coastlinewidth = 0.5,
         projection = list(type = "natural earth"),
-        bgcolor = "rgba(0,0,0,0)",
-        landcolor = "rgba(20,20,45,0.95)",
+        bgcolor = "#0a1628",
+        landcolor = "#1e293b",
         showland = TRUE,
-        oceancolor = "rgba(8,8,25,1)",
+        oceancolor = "#0f172a",
         showocean = TRUE,
         showcountries = TRUE,
-        countrycolor = "rgba(99,102,241,0.25)",
+        countrycolor = "rgba(255,255,255,0.2)",
         countrywidth = 0.3
       ),
       height = 550,
@@ -96,23 +101,27 @@ create_choropleth_map <- function(df) {
       margin = list(l = 80, r = 80, t = 10, b = 200) # Bottom margin for slider
     ) %>%
     # 6. Explicitly Style Animation Controls (White Text & Visible Buttons)
+    # CRITICAL: redraw = TRUE is required for choropleth maps to animate properly
     animation_opts(
-      frame = 200,
-      transition = 200,
-      redraw = FALSE
+      frame = 500,
+      transition = 300,
+      redraw = TRUE
     ) %>%
     animation_slider(
       currentvalue = list(
         prefix = "Semana: ",
         font = list(color = "white", size = 14)
       ),
-      font = list(color = "white")
+      font = list(color = "white"),
+      bgcolor = "rgba(30,41,59,0.8)",
+      bordercolor = "rgba(255,255,255,0.3)",
+      tickcolor = "white"
     ) %>%
     animation_button(
       x = 0.02, xanchor = "left", y = 0, yanchor = "top",
       label = "Play",
       font = list(color = "white"),
-      bgcolor = "rgba(99,102,241,0.8)",
+      bgcolor = "rgba(220,38,38,0.9)",
       bordercolor = "rgba(255,255,255,0.5)"
     )
 

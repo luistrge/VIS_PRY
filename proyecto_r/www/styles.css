@@ -162,6 +162,44 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 .chart-section.map-section .js-plotly-plot { overflow: visible !important; }
 .chart-section.map-section { overflow: visible !important; }
 
+/* Animation Slider Styling for Dark Theme */
+.js-plotly-plot .slider-container {
+  background: rgba(12, 30, 45, 0.95) !important;
+  border-radius: 8px !important;
+  padding: 10px 15px !important;
+  margin: 10px 20px !important;
+}
+.js-plotly-plot .slider .slider-rail {
+  background: rgba(99, 102, 241, 0.3) !important;
+  height: 6px !important;
+  border-radius: 3px !important;
+}
+.js-plotly-plot .slider .slider-grip {
+  background: linear-gradient(135deg, #14b8a6, #22c55e) !important;
+  border: 2px solid white !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.4) !important;
+}
+.js-plotly-plot .slider .slider-grip:hover {
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.6) !important;
+  transform: scale(1.1) !important;
+}
+.js-plotly-plot .updatemenu-button {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+.js-plotly-plot .updatemenu-button:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 1), rgba(168, 85, 247, 1)) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.5) !important;
+}
+
 /* DASHBOARD SECTION */
 .dashboard-section { padding: 40px 20px; min-height: 100vh; }
 

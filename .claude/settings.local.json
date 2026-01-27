@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(powershell -Command \"Get-Content panel_2020_paises_sin_nan_R_clean.csv | Select-Object -Last 100\")"
+    ]
+  }
+}
