@@ -9,10 +9,10 @@
 
 **Dashboard interactivo de visualización epidemiológica con estética Cyberpunk Scientific**
 
-*Análisis integral del impacto del COVID-19 durante 2020 correlacionado con indicadores económicos y de salud de 190+ países*
+*Análisis integral del impacto del COVID-19 durante 2020 correlacionado con indicadores económicos y de salud de 189 países*
 
 <img src="https://img.shields.io/badge/Casos_Analizados-83M+-22D3EE?style=for-the-badge" alt="Casos"/>
-<img src="https://img.shields.io/badge/Países-190+-22c55e?style=for-the-badge" alt="Países"/>
+<img src="https://img.shields.io/badge/Países-189-22c55e?style=for-the-badge" alt="Países"/>
 <img src="https://img.shields.io/badge/Visualizaciones-9+-F97316?style=for-the-badge" alt="Visualizaciones"/>
 
 </div>
