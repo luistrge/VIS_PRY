@@ -9,10 +9,10 @@
 
 **Dashboard interactivo de visualización epidemiológica con estética Cyberpunk Scientific**
 
-*Análisis integral del impacto del COVID-19 durante 2020 correlacionado con indicadores económicos y de salud de 190+ países*
+*Análisis integral del impacto del COVID-19 durante 2020 correlacionado con indicadores económicos y de salud de 189 países*
 
 <img src="https://img.shields.io/badge/Casos_Analizados-83M+-22D3EE?style=for-the-badge" alt="Casos"/>
-<img src="https://img.shields.io/badge/Países-190+-22c55e?style=for-the-badge" alt="Países"/>
+<img src="https://img.shields.io/badge/Países-189-22c55e?style=for-the-badge" alt="Países"/>
 <img src="https://img.shields.io/badge/Visualizaciones-9+-F97316?style=for-the-badge" alt="Visualizaciones"/>
 
 </div>
@@ -63,7 +63,7 @@ Este dashboard proporciona un análisis visual interactivo de los datos epidemio
 | Fuente | Datos | Cobertura |
 |--------|-------|-----------|
 | **WHO** (OMS) | Casos confirmados, muertes, tasas de incidencia | Global 2020 |
-| **World Bank** | PIB per cápita, gasto en salud (% PIB) | 190+ países |
+| **World Bank** | PIB per cápita, gasto en salud (% PIB) | 189 países |
 
 ---
 
@@ -73,7 +73,7 @@ Este dashboard proporciona un análisis visual interactivo de los datos epidemio
 ┌─────────────────────────────────────────────────────────────────┐
 │                        🏠 HOME (Landing)                        │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐           │
-│  │ 83M+     │ │ 1.8M+    │ │ 190+     │ │ 2.18%    │  KPIs     │
+│  │ 83M+     │ │ 1.8M+    │ │ 189     │ │ 2.18%    │  KPIs     │
 │  │ Casos    │ │ Muertes  │ │ Países   │ │ Letalidad│           │
 │  └──────────┘ └──────────┘ └──────────┘ └──────────┘           │
 │                    ↓                    ↓                       │
