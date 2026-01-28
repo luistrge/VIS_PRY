@@ -95,11 +95,11 @@ server <- function(input, output, session) {
               </div>
               <h1 class="hero-title">
                 COVID-19<br>
-                <span class="hero-title-accent">Panel de Analisis 2020</span>
+                <span class="hero-title-accent">Panel de Análisis 2020</span>
               </h1>
               <p class="hero-description">
-                Analisis integral del impacto del COVID-19 correlacionado con indicadores
-                economicos y de salud. Explora la evolucion temporal y compara datos de mas de 190 paises.
+                Análisis integral del impacto del COVID-19 correlacionado con indicadores
+                economicos y de salud. Explora la evolucion temporal y compara datos de mas de 190 países.
               </p>
             </div>
             <div class="hero-visual">
@@ -146,11 +146,11 @@ server <- function(input, output, session) {
         div(
           class = "hero-buttons",
           actionButton("btn_global",
-            HTML('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Visualizacion Global'),
+            HTML('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Visualización Global'),
             class = "hero-btn hero-btn-primary"
           ),
           actionButton("btn_pais",
-            HTML('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg> Analisis por Pais'),
+            HTML('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg> Análisis por País'),
             class = "hero-btn hero-btn-secondary"
           )
         ),
@@ -166,7 +166,7 @@ server <- function(input, output, session) {
             </div>
             <div class="hero-kpi">
               <div class="hero-kpi-value">{n_paises}</div>
-              <div class="hero-kpi-label">Paises</div>
+              <div class="hero-kpi-label">Países</div>
             </div>
             <div class="hero-kpi">
               <div class="hero-kpi-value">{sprintf("%.2f%%", avg_letalidad)}</div>
@@ -210,8 +210,8 @@ server <- function(input, output, session) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
           <div>
-            <h1 class="section-page-title">Visualizacion Global</h1>
-            <p class="section-page-subtitle">Analisis comparativo de todos los paises del mundo</p>
+            <h1 class="section-page-title">Visualización Global</h1>
+            <p class="section-page-subtitle">Análisis comparativo de todos los países del mundo</p>
           </div>
         </div>
       '),
@@ -232,7 +232,7 @@ server <- function(input, output, session) {
           <div class="dashboard-kpi">
             <div class="dashboard-kpi-icon paises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg></div>
             <div class="dashboard-kpi-value paises">{n_paises}</div>
-            <div class="dashboard-kpi-label">Paises Analizados</div>
+            <div class="dashboard-kpi-label">Países Analizados</div>
           </div>
           <div class="dashboard-kpi">
             <div class="dashboard-kpi-icon letalidad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
@@ -270,13 +270,13 @@ server <- function(input, output, session) {
             tags$span("02", class = "section-number"),
             div(
               div("Olas de Contagio", class = "section-title"),
-              div("Comparacion de olas entre paises (normalizado)", class = "section-subtitle")
+              div("Comparacion de olas entre países (normalizado)", class = "section-subtitle")
             )
           ),
           fluidRow(
             column(
               12,
-              selectizeInput("paises_wave", "Seleccionar paises:",
+              selectizeInput("paises_wave", "Seleccionar países:",
                 choices = paises, selected = head(paises, 5), multiple = TRUE,
                 options = list(maxItems = 8)
               )
@@ -302,7 +302,7 @@ server <- function(input, output, session) {
           fluidRow(
             column(
               6,
-              selectizeInput("paises_dumbbell", "Seleccionar paises:",
+              selectizeInput("paises_dumbbell", "Seleccionar países:",
                 choices = paises, selected = head(paises, 10), multiple = TRUE,
                 options = list(maxItems = 15)
               )
@@ -341,13 +341,13 @@ server <- function(input, output, session) {
             tags$span("05", class = "section-number"),
             div(
               div("Matriz de Eficiencia Sanitaria", class = "section-title"),
-              div("Incidencia vs Letalidad por pais", class = "section-subtitle")
+              div("Incidencia vs Letalidad por país", class = "section-subtitle")
             )
           ),
           fluidRow(
             column(
               12,
-              selectizeInput("paises_efficiency", "Filtrar paises (vacio = todos):",
+              selectizeInput("paises_efficiency", "Filtrar países (vacio = todos):",
                 choices = paises, selected = NULL, multiple = TRUE,
                 options = list(maxItems = 20)
               )
@@ -425,8 +425,8 @@ server <- function(input, output, session) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           </div>
           <div>
-            <h1 class="section-page-title">Analisis por Pais</h1>
-            <p class="section-page-subtitle">Explora los datos detallados de cada pais</p>
+            <h1 class="section-page-title">Análisis por País</h1>
+            <p class="section-page-subtitle">Explora los datos detallados de cada país</p>
           </div>
         </div>
       '),
@@ -439,7 +439,7 @@ server <- function(input, output, session) {
           HTML('<div class="filter-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;vertical-align:middle;margin-right:8px"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>Selecciona un Pais</div>')
         ),
         fluidRow(
-          column(4, selectizeInput("pais_select", "Pais:", choices = paises, selected = paises[1])),
+          column(4, selectizeInput("pais_select", "País:", choices = paises, selected = paises[1])),
           column(4, dateInput("fecha_inicio", "Fecha inicio:", value = fecha_min, min = fecha_min, max = fecha_max)),
           column(4, dateInput("fecha_fin", "Fecha fin:", value = fecha_max, min = fecha_min, max = fecha_max))
         )
@@ -473,7 +473,7 @@ server <- function(input, output, session) {
             tags$span("02", class = "section-number"),
             div(
               div("Comparativa Mundial", class = "section-title"),
-              div("Comparacion del pais con la media mundial", class = "section-subtitle")
+              div("Comparacion del país con la media mundial", class = "section-subtitle")
             )
           ),
           div(
