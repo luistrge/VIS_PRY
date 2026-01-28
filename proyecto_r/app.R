@@ -518,12 +518,6 @@ server <- function(input, output, session) {
         )
       ),
 
-      # Peak relationship message
-      div(
-        style = "text-align: center; margin-top: -10px; margin-bottom: 20px;",
-        uiOutput("mensaje_relacion_picos")
-      ),
-
       # Footer
       HTML('<div class="footer">Dashboard COVID-19 2020 | Datos: WHO & World Bank | R Shiny + Plotly</div>')
     )
@@ -664,12 +658,6 @@ server <- function(input, output, session) {
     )
   })
 
-  output$mensaje_relacion_picos <- renderUI({
-    req(current_page() == "pais")
-    data <- datos_pais_filtrados()
-    req(nrow(data) > 0)
-    HTML(generate_peak_message(data))
-  })
 }
 
 # ==============================================================================

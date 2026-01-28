@@ -38,8 +38,8 @@ body { background: linear-gradient(135deg, #061826 0%, #0b2433 50%, #081b2a 100%
 .hero-btn:hover::before { left: 100%; }
 .hero-btn-primary { background: linear-gradient(135deg, #14b8a6, #22c55e); color: #fff; box-shadow: 0 8px 30px rgba(20, 184, 166, 0.4); }
 .hero-btn-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 40px rgba(20, 184, 166, 0.6); }
-.hero-btn-secondary { background: rgba(20, 44, 60, 0.8); color: #fff; border: 2px solid rgba(20, 184, 166, 0.5); }
-.hero-btn-secondary:hover { transform: translateY(-4px); border-color: #f59e0b; box-shadow: 0 8px 30px rgba(245, 158, 11, 0.3); }
+.hero-btn-secondary { background: linear-gradient(135deg, #14b8a6, #22c55e); color: #fff; box-shadow: 0 8px 30px rgba(20, 184, 166, 0.4); }
+.hero-btn-secondary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 40px rgba(20, 184, 166, 0.6); }
 .hero-btn svg { width: 24px; height: 24px; }
 
 /* KPIs EN HERO - PEQUEÑOS */
@@ -123,10 +123,37 @@ body { background: linear-gradient(135deg, #061826 0%, #0b2433 50%, #081b2a 100%
 .chart-section.chart-efficiency { overflow: hidden; }
 .chart-section.chart-efficiency .chart-content { align-items: flex-start; padding-top: 8px; }
 .chart-section.chart-efficiency .plotly-graph-div { height: 450px !important; }
-.chart-section.map-section { background: linear-gradient(145deg, rgba(12, 34, 48, 0.7), rgba(10, 28, 40, 0.8)); padding: 15px 0 10px 0; overflow: hidden; margin-left: auto; margin-right: auto; width: 100%; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.08); }
-.chart-section.map-section .section-header { padding-left: 25px; padding-right: 25px; }
+.chart-section.map-section {
+  background: linear-gradient(180deg, rgba(10, 14, 39, 0.6) 0%, rgba(8, 10, 25, 0.8) 100%);
+  padding: 15px 0 10px 0;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  border-radius: 24px;
+  border: 1.5px solid rgba(200, 200, 200, 0.12);
+  box-shadow:
+    0 0 80px rgba(99, 102, 241, 0.1),
+    0 0 40px rgba(168, 85, 247, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+.chart-section.map-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 60%, rgba(99, 102, 241, 0.05), transparent 50%);
+  pointer-events: none;
+  border-radius: 24px;
+}
+.chart-section.map-section .section-header { padding-left: 25px; padding-right: 25px; position: relative; z-index: 1; }
 .chart-section.map-section .js-plotly-plot, .chart-section.map-section .plotly-graph-div {
   width: 100% !important;
+  position: relative;
+  z-index: 1;
 }
 .section-header { display: flex; align-items: center; gap: 60px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(20, 184, 166, 0.2); padding-left: 10px; }
 .section-number { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, rgba(6, 224, 199, 0.35), rgba(228, 148, 10, 0.863)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-right: 10px; line-height: 1; }

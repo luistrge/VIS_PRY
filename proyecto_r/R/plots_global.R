@@ -37,18 +37,8 @@ create_choropleth_map <- function(df) {
   max_incidencia <- quantile(data_map$IA_100k_semanal, 0.95, na.rm = TRUE)
   if (is.na(max_incidencia) || max_incidencia == 0) max_incidencia <- 100
 
-  # 4. Define colorscale as list of lists (Critical for R Plotly)
-  # Red-Yellow Heat colorscale - dark to bright intensity
-  custom_colorscale <- list(
-    list(0, "#1a0a0a"),
-    list(0.15, "#3d0c0c"),
-    list(0.3, "#7a1515"),
-    list(0.45, "#b91c1c"),
-    list(0.6, "#dc2626"),
-    list(0.75, "#f97316"),
-    list(0.9, "#fbbf24"),
-    list(1, "#fef08a")
-  )
+  # 4. Use Plasma colorscale (purple to yellow) - matches dark theme
+  # Plasma is a vibrant, perceptually uniform colorscale
 
   # 5. Create Animated Map
   # NOTE: In R Plotly, %{frame} doesn't work in hovertemplate for choropleth.
@@ -62,19 +52,20 @@ create_choropleth_map <- function(df) {
       text = ~pais,
       customdata = ~semana_str,
       frame = ~semana_str, # Animation Frame
-      colorscale = custom_colorscale,
+      colorscale = "Plasma",
       zmin = 0,
       zmax = max_incidencia,
-      marker = list(line = list(color = "rgba(255,255,255,0.3)", width = 0.5)),
+      marker = list(line = list(color = "rgba(240,240,240,0.25)", width = 0.5)),
       colorbar = list(
         title = list(text = "Incidencia<br>Semanal/100k", font = list(size = 11, color = "white")),
         thickness = 18,
         len = 0.75,
         x = 0.98,
-        bgcolor = "rgba(15,15,40,0.9)",
-        bordercolor = "rgba(99,102,241,0.4)",
+        bgcolor = "rgba(0,0,0,0)",
+        bordercolor = "rgba(0,0,0,0)",
         borderwidth = 1,
-        tickfont = list(color = "rgba(255,255,255,0.8)", size = 10)
+        tickfont = list(color = "rgba(255,255,255,0.9)", size = 10),
+        tickcolor = "rgba(255,255,255,0.5)"
       ),
       hovertemplate = "<b>%{text}</b><br>Semana: %{customdata}<br>Incidencia: %{z:,.1f}/100k<extra></extra>"
     ) %>%
@@ -82,22 +73,22 @@ create_choropleth_map <- function(df) {
       geo = list(
         showframe = FALSE,
         showcoastlines = TRUE,
-        coastlinecolor = "rgba(255,255,255,0.4)",
+        coastlinecolor = "#030d1b",
         coastlinewidth = 0.5,
         projection = list(type = "natural earth"),
-        bgcolor = "#0a1628",
-        landcolor = "#1e293b",
+        bgcolor = "rgba(0,0,0,0)",
+        landcolor = "#1a1f3a",
         showland = TRUE,
-        oceancolor = "#0f172a",
+        oceancolor = "#153055",
         showocean = TRUE,
         showcountries = TRUE,
-        countrycolor = "rgba(255,255,255,0.2)",
+        countrycolor = "rgba(200,200,200,0.15)",
         countrywidth = 0.3
       ),
       height = 550,
       paper_bgcolor = "rgba(0,0,0,0)",
       plot_bgcolor = "rgba(0,0,0,0)",
-      font = list(color = "rgba(255,255,255,0.8)"),
+      font = list(color = "rgba(255,255,255,0.9)"),
       margin = list(l = 80, r = 80, t = 10, b = 200) # Bottom margin for slider
     ) %>%
     # 6. Explicitly Style Animation Controls (White Text & Visible Buttons)
@@ -113,16 +104,16 @@ create_choropleth_map <- function(df) {
         font = list(color = "white", size = 14)
       ),
       font = list(color = "white"),
-      bgcolor = "rgba(30,41,59,0.8)",
-      bordercolor = "rgba(255,255,255,0.3)",
-      tickcolor = "white"
+      bgcolor = "rgba(0,0,0,0)",
+      bordercolor = "rgba(0,0,0,0)",
+      tickcolor = "rgba(255,255,255,0.7)"
     ) %>%
     animation_button(
       x = 0.02, xanchor = "left", y = 0, yanchor = "top",
       label = "Play",
       font = list(color = "white"),
-      bgcolor = "rgba(220,38,38,0.9)",
-      bordercolor = "rgba(255,255,255,0.5)"
+      bgcolor = "rgba(99,102,241,0.8)",
+      bordercolor = "rgba(255,255,255,0.4)"
     )
 
   return(fig)
@@ -204,7 +195,7 @@ create_ridgeline_plot <- function(df, selected_countries) {
         x = 0.5,
         bgcolor = "rgba(20,20,50,0.7)",
         bordercolor = "rgba(99,102,241,0.3)",
-        borderwidth = 1
+        borderwidth = 0
       ),
       xaxis = list(
         title = list(text = "Tiempo", font = list(size = 13, color = "rgba(255,255,255,0.9)")),
@@ -330,7 +321,7 @@ create_dumbbell_chart <- function(df, selected_countries, fecha_inicio, fecha_fi
         x = 0.5,
         bgcolor = "rgba(20,20,50,0.7)",
         bordercolor = "rgba(99,102,241,0.3)",
-        borderwidth = 1
+        borderwidth = 0
       ),
       xaxis = list(
         title = "Incidencia Acumulada (por 100k)",
