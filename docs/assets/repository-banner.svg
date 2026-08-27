@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420" role="img" aria-labelledby="title description">
+  <title id="title">COVID-19, Wealth and Mortality</title>
+  <desc id="description">Repository banner for an interactive 2020 global analytics dashboard built with R Shiny and Plotly.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061826"/>
+      <stop offset="0.55" stop-color="#0b2433"/>
+      <stop offset="1" stop-color="#102a3a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.52" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1400" height="420" rx="28" fill="url(#background)"/>
+  <circle cx="1180" cy="90" r="270" fill="url(#glow)"/>
+  <circle cx="112" cy="390" r="190" fill="#22c55e" opacity=".04"/>
+  <path d="M0 340 C210 285 320 390 530 328 S880 250 1060 320 S1260 372 1400 310" fill="none" stroke="#22d3ee" stroke-opacity=".08" stroke-width="2"/>
+
+  <g transform="translate(74,72)">
+    <rect width="54" height="54" rx="14" fill="#14b8a6" fill-opacity=".14" stroke="#22d3ee" stroke-opacity=".45"/>
+    <circle cx="27" cy="27" r="10" fill="none" stroke="#22d3ee" stroke-width="3"/>
+    <path d="M27 8v7M27 39v7M8 27h7M39 27h7M14 14l5 5M35 35l5 5M40 14l-5 5M19 35l-5 5" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+
+  <text x="150" y="105" fill="#94a3b8" font-family="Inter,Segoe UI,sans-serif" font-size="18" font-weight="600" letter-spacing="3">GLOBAL ANALYTICS · 2020</text>
+  <text x="74" y="177" fill="#f8fafc" font-family="Inter,Segoe UI,sans-serif" font-size="52" font-weight="750">COVID-19, Wealth</text>
+  <text x="74" y="237" fill="url(#accent)" font-family="Inter,Segoe UI,sans-serif" font-size="52" font-weight="750">&amp; Mortality</text>
+  <text x="76" y="279" fill="#94a3b8" font-family="Inter,Segoe UI,sans-serif" font-size="20">Interactive cross-country exploration with R Shiny + Plotly</text>
+
+  <g transform="translate(76,320)" font-family="Inter,Segoe UI,sans-serif">
+    <g>
+      <text y="0" fill="#f8fafc" font-size="24" font-weight="700">69,174</text>
+      <text y="25" fill="#64748b" font-size="14">DAILY RECORDS</text>
+    </g>
+    <line x1="130" y1="-22" x2="130" y2="27" stroke="#334155"/>
+    <g transform="translate(162,0)">
+      <text y="0" fill="#f8fafc" font-size="24" font-weight="700">189</text>
+      <text y="25" fill="#64748b" font-size="14">COUNTRIES</text>
+    </g>
+    <line x1="260" y1="-22" x2="260" y2="27" stroke="#334155"/>
+    <g transform="translate(292,0)">
+      <text y="0" fill="#f8fafc" font-size="24" font-weight="700">9</text>
+      <text y="25" fill="#64748b" font-size="14">INTERACTIVE VIEWS</text>
+    </g>
+  </g>
+
+  <rect x="840" y="69" width="485" height="278" rx="22" fill="#071e2c" fill-opacity=".72" stroke="#22d3ee" stroke-opacity=".17"/>
+  <line x1="888" y1="297" x2="1278" y2="297" stroke="#334155"/>
+  <line x1="888" y1="111" x2="888" y2="297" stroke="#334155"/>
+  <line x1="888" y1="235" x2="1278" y2="235" stroke="#334155" stroke-dasharray="4 8" opacity=".6"/>
+  <line x1="888" y1="173" x2="1278" y2="173" stroke="#334155" stroke-dasharray="4 8" opacity=".6"/>
+  <path d="M888 280 C925 276 945 268 975 261 S1023 238 1047 243 S1092 204 1117 212 S1157 152 1188 172 S1230 125 1278 138" fill="none" stroke="#22d3ee" stroke-width="4" stroke-linecap="round"/>
+  <path d="M888 285 C930 283 951 276 983 273 S1035 262 1061 263 S1108 244 1137 250 S1187 220 1215 227 S1250 201 1278 206" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+  <circle cx="1047" cy="243" r="6" fill="#22d3ee"/>
+  <circle cx="1188" cy="172" r="9" fill="#22d3ee" fill-opacity=".22" stroke="#22d3ee" stroke-width="3"/>
+  <circle cx="1137" cy="250" r="6" fill="#22c55e"/>
+  <circle cx="905" cy="93" r="4" fill="#22d3ee"/>
+  <text x="916" y="98" fill="#94a3b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">reported cases</text>
+  <circle cx="1030" cy="93" r="4" fill="#22c55e"/>
+  <text x="1041" y="98" fill="#94a3b8" font-family="Inter,Segoe UI,sans-serif" font-size="13">context indicators</text>
+
+  <rect x="1" y="1" width="1398" height="418" rx="27" fill="none" stroke="#ffffff" stroke-opacity=".06" stroke-width="2"/>
+</svg>
